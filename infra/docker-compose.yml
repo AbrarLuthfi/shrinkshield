@@ -1,10 +1,29 @@
 version: "3.9"
 services:
+  db:
+    image: postgres:16
+    container_name: shrinkshield-db
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+      POSTGRES_DB: shrinkshield
+    ports:
+      - "5432:5432"
+    volumes:
+      - dbdata:/var/lib/postgresql/data
+
   backend:
     build: ../backend
     container_name: shrinkshield-backend
+    depends_on:
+      - db
+    env_file:
+      - ../backend/.env
     ports:
       - "8000:8000"
     volumes:
       - ../backend:/app
     command: uvicorn app.main:app --host 0.0.0.0 --port 8000 --reload
+
+volumes:
+  dbdata: {}
