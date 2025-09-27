@@ -26,11 +26,10 @@ Basic DB endpoints:
 
 **How to run**
 
-```bash
-cd infra
-docker compose up --build -d
-# logs (optional)
-docker compose logs -f backend
+`cd infra`
+`docker compose up --build -d`
+`# logs (optional)`
+`docker compose logs -f backend`
 
 
 ### Database migrations with Alembic
