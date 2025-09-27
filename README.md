@@ -10,6 +10,7 @@
 
 ## ✅ Day 2 Checkpoint — Database Online
 **What’s live now**
+
 Docker Compose runs **Postgres 16** and the **FastAPI backend**
 SQLAlchemy wired up (`app/db.py`, `app/models.py`)
 Tables auto-created on startup (dev)
