@@ -5,10 +5,6 @@ from . import models
 
 app = FastAPI(title="ShrinkShield API")
 
-@app.on_event("startup")
-def on_startup():
-    Base.metadata.create_all(bind=engine)
-
 @app.get("/health")
 def health():
     return {"status": "ok", "message": "ShrinkShield backend is running 🚀"}
