@@ -25,3 +25,10 @@ cd infra
 docker compose up --build -d
 # logs (optional)
 docker compose logs -f backend
+
+
+### Database migrations with Alembic
+
+- Create new migration after editing models:
+  ```bash
+  docker compose exec backend bash -lc 'cd /app && alembic -c /app/alembic.ini revision --autogenerate -m "describe change"'
