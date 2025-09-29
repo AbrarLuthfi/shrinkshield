@@ -86,3 +86,37 @@ curl -X POST "http://localhost:8000/receipts" \
 ```
 curl http://localhost:8000/receipts
 ```
+
+
+## ✅ Day 4 Checkpoint — Size Normalization & Unit Pricing
+
+**What’s live now**
+
+- **Normalized sizes** → convert “1 L”, “500 mL”, “12oz”, etc. to **milliliters** (`utils/normalizer.py`)
+- **Structured OCR lines** → stub now returns `{ name, size, price }` (extendable to real OCR later)
+- **New table**: `product_lines` via Alembic migration  
+  - columns: `id, receipt_id, name, raw_size, normalized_size_ml, price, unit_price_per_ml`
+- **/receipts (POST)** now:
+  - keeps Day 3 raw OCR lines (for readability)
+  - **parses + normalizes** items
+  - **computes unit price** (price ÷ normalized_size_ml)
+  - saves structured rows to `product_lines`
+
+**Endpoints**
+- `GET /receipts` → list uploaded receipts
+- `GET /receipts/{id}` → details including raw lines **and** structured `products[]`
+
+**How to run**
+
+```bash
+cd infra
+docker compose up --build -d
+# logs (optional)
+docker compose logs -f backend
+```
+**Upload a sample file**
+
+```bash
+curl -X POST "http://localhost:8000/receipts" \
+  -F "file=@/path/to/sample-receipt.png"
+```
