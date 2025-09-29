@@ -88,7 +88,7 @@ curl http://localhost:8000/receipts
 ```
 
 
-## ✅ Day 4 Checkpoint — Product/Size Normalization & Unit Pricing
+## ✅ Day 4 Checkpoint — Size Normalization & Unit Pricing
 
 **What’s live now**
 
@@ -101,10 +101,9 @@ curl http://localhost:8000/receipts
   - **parses + normalizes** items
   - **computes unit price** (price ÷ normalized_size_ml)
   - saves structured rows to `product_lines`
-
-**Endpoints**
-- `GET /receipts` → list uploaded receipts
-- `GET /receipts/{id}` → details including raw lines **and** structured `products[]`
+- Endpoints:
+  - `GET /receipts` → list uploaded receipts
+  - `GET /receipts/{id}` → details including raw lines **and** structured `products[]`
 
 **How to run**
 
