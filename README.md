@@ -9,7 +9,7 @@ It uses FastAPI, PostgreSQL, SQLAlchemy, and Alembic for migrations. Future mile
 
 - [x] Day 1: Containerized FastAPI backend with health endpoint  
 - [x] Day 2: Postgres + Alembic migrations; basic data models  
-- [ ] Day 3: OCR pipeline scaffold (Donut/TrOCR) → parse sample receipts  
+- [x] Day 3: OCR pipeline scaffold (Donut/TrOCR) → parse sample receipts  
 - [ ] Day 4: Size normalization + unit price calculation  
 - [ ] Day 5: Web UI scaffold (Next.js) + upload flow  
 - [ ] Day 6: Alerts logic (shrink & unit-price spike) + tests  
@@ -53,4 +53,37 @@ cd infra
 docker compose up --build -d
 # logs (optional)
 docker compose logs -f backend
+```
+
+
+## ✅ Day 3 Checkpoint — OCR Pipeline Scaffold
+
+**What’s live now**
+
+- Upload endpoint wired (`POST /receipts`)  
+- Files saved to the database with metadata (filename, mimetype, size, uploaded_at)  
+- OCR pipeline scaffold added (`ocr/adapter.py`)  
+  - Currently uses a **stub engine** that returns placeholder OCR text  
+  - Future: swap in Hugging Face Donut/TrOCR models for real parsing  
+- Endpoints:  
+  - `GET /receipts` → list all uploaded receipts  
+  - `GET /receipts/{id}` → retrieve details + OCR output for a specific receipt  
+
+**How to run**
+
+```bash
+cd infra
+docker compose up --build -d
+# logs (optional)
+docker compose logs -f backend
+```
+
+# upload a sample file
+```
+curl -X POST "http://localhost:8000/receipts" \
+-F "file=@/path/to/sample-receipt.png"
+```
+# list stored receipts
+```
+curl http://localhost:8000/receipts
 ```
