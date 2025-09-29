@@ -77,13 +77,12 @@ docker compose up --build -d
 # logs (optional)
 docker compose logs -f backend
 ```
-
-# upload a sample file
+**upload a sample file**
 ```
 curl -X POST "http://localhost:8000/receipts" \
 -F "file=@/path/to/sample-receipt.png"
 ```
-# list stored receipts
+**list stored receipts**
 ```
 curl http://localhost:8000/receipts
 ```
