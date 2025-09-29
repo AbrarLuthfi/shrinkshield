@@ -8,22 +8,18 @@ class OCRAdapter:
     - Later: swap to HuggingFace model (Donut/TrOCR) in this class.
     """
 
+    def extract_lines(self, content: bytes) -> List[Dict]:
+        # Day-4: structured items
+        return [
+            {"name": "Distilled Water", "size": "1 L",     "price": 1.29},
+            {"name": "Sparkling Water", "size": "500 mL",  "price": 0.99},
+        ]
+
     def __init__(self):
         # put model init here when you add HF model
         pass
 
-    def extract(self, file_bytes: bytes, mimetype: str) -> Dict:
-        """
-        Returns a dict:
-        {
-          "lines": ["raw line 1", "raw line 2", ...],
-          "meta": {...}
-        }
-        """
-        # --- placeholder extraction ---
-        # For images/PDFs we don't truly OCR yet; we return a single "blob" line.
-        # This keeps API plumbing working so Day 4 can focus on normalization.
-        # Replace with real OCR later.
-        text = f"[placeholder OCR] bytes={len(file_bytes)} mimetype={mimetype}"
-        return {"lines": [text], "meta": {"engine": "stub", "mimetype": mimetype}}
 
+    def extract(self, content: bytes, mimetype: str) -> Dict[str, List[str]]:
+        # still keep a Day-3 style stub for compatibility
+        return {"lines": ["Distilled Water 1 L $1.29", "Sparkling Water 500 mL $0.99"]}
