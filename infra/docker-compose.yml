@@ -25,5 +25,20 @@ services:
       - ../backend:/app
     command: uvicorn app.main:app --host 0.0.0.0 --port 8000 --reload
 
+  web:
+    build: ../web
+    container_name: shrinkshield-web
+    ports:
+      - "3000:3000"
+    volumes:
+      - ../web:/app
+      - /app/node_modules
+    environment:
+      NEXT_TELEMETRY_DISABLED: "1"
+    depends_on:
+      - backend
+
+
 volumes:
   dbdata: {}
+
