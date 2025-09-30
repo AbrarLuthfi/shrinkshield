@@ -11,7 +11,7 @@ It uses FastAPI, PostgreSQL, SQLAlchemy, and Alembic for migrations. Future mile
 - [x] Day 2: Postgres + Alembic migrations; basic data models  
 - [x] Day 3: OCR pipeline scaffold (Donut/TrOCR) → parse sample receipts  
 - [x] Day 4: Size normalization + unit price calculation  
-- [ ] Day 5: Web UI scaffold (Next.js) + upload flow  
+- [x] Day 5: Web UI scaffold (Next.js) + upload flow  
 - [ ] Day 6: Alerts logic (shrink & unit-price spike) + tests  
 - [ ] Day 7: Deploy preview + demo video  
 
@@ -40,7 +40,8 @@ curl http://localhost:8000/health
 
 - Docker Compose runs **Postgres 16** and the **FastAPI backend**  
 - SQLAlchemy wired up (`app/db.py`, `app/models.py`)  
-- Tables managed by **Alembic migrations**  
+- Tables managed by **Alembic migrations**
+   
 - Basic DB endpoints:  
   - `GET /health` → service health  
   - `GET /db/ping` → DB connection check  
@@ -64,7 +65,8 @@ docker compose logs -f backend
 - Files saved to the database with metadata (filename, mimetype, size, uploaded_at)  
 - OCR pipeline scaffold added (`ocr/adapter.py`)  
   - Currently uses a **stub engine** that returns placeholder OCR text  
-  - Future: swap in Hugging Face Donut/TrOCR models for real parsing  
+  - Future: swap in Hugging Face Donut/TrOCR models for real parsing
+    
 - Endpoints:  
   - `GET /receipts` → list all uploaded receipts  
   - `GET /receipts/{id}` → retrieve details + OCR output for a specific receipt  
@@ -101,6 +103,7 @@ curl http://localhost:8000/receipts
   - **parses + normalizes** items
   - **computes unit price** (price ÷ normalized_size_ml)
   - saves structured rows to `product_lines`
+    
 - Endpoints:
   - `GET /receipts` → list uploaded receipts
   - `GET /receipts/{id}` → details including raw lines **and** structured `products[]`
@@ -119,3 +122,40 @@ docker compose logs -f backend
 curl -X POST "http://localhost:8000/receipts" \
   -F "file=@/path/to/sample-receipt.png"
 ```
+
+
+## ✅ Day 5 Checkpoint — Frontend Bootstrap (Next.js + Docker)
+
+### What’s live now
+- **Web service scaffolded** (`/web` with Next.js 14)
+- **Dockerized frontend** (`docker-compose.yml` now builds & runs `shrinkshield-web` on port **3000**)
+- **Global styles** wired (`styles.css`)
+- **Basic page (`index.js`)**:
+  - Header (`ShrinkShield — Receipts`)
+  - File upload control + disabled Upload button
+  - Receipt list section
+  - Graceful fallback (`"Failed to load receipts"` / `"No receipts yet"`)
+- **API integration (GET /receipts)**: frontend fetches receipts from backend
+  - currently shows placeholder empty state when no receipts exist
+- CORS enabled in backend so browser → API requests work
+  
+- Endpoints:
+  - Backend (API):  
+    - `GET /receipts` → list receipts (frontend consumes this)  
+    - `POST /receipts` → still curl-only, browser wiring coming next  
+  - Frontend (web):  
+    - `http://localhost:3000` → renders ShrinkShield UI  
+
+### How to run
+```bash
+cd infra
+docker compose up --build -d
+# logs (optional)
+docker compose logs -f web
+```
+
+### Visit in browser
+- Open: http://localhost:3000    You should see:
+- Page title “ShrinkShield — Receipts”
+- File input + Upload button (disabled)
+- “Uploaded receipts” section → shows `No receipts yet` if DB is empty
