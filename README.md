@@ -13,7 +13,7 @@ It uses FastAPI, PostgreSQL, SQLAlchemy, and Alembic for migrations. Future mile
 - [x] Day 4: Size normalization + unit price calculation  
 - [x] Day 5: Web UI scaffold (Next.js) + upload flow  
 - [x] Day 6: Alerts logic (shrink & unit-price spike) + tests  
-- [ ] Day 7: Deploy preview + demo video  
+- [x] Day 7: Deploy preview + demo video  
 
 ---
 
@@ -184,3 +184,28 @@ docker compose up --build -d
 docker compose logs -f backend
 docker compose logs -f web
 ```
+
+
+## ✅ Day 7 Checkpoint — Deploy Preview & Demo
+
+**What’s live now**
+
+- **Next.js UI** (Dockerized) listing receipts and showing details
+  - `GET /receipts` → list with links
+  - `GET /receipts/{id}` → raw OCR lines + normalized products with unit price
+- **Upload** via UI (stub OCR) persists rows and displays results
+- Full stack runs with Docker Compose: `db` (Postgres 16), `backend` (FastAPI), `web` (Next.js)
+
+**How to run (local preview)**
+
+```bash
+cd infra
+docker compose up --build -d
+# logs (optional)
+docker compose logs -f web
+```
+**Open:**
+
+- Web UI: http://localhost:3000
+- API: http://localhost:8000
+- Health: http://localhost:8000/health
