@@ -12,7 +12,7 @@ It uses FastAPI, PostgreSQL, SQLAlchemy, and Alembic for migrations. Future mile
 - [x] Day 3: OCR pipeline scaffold (Donut/TrOCR) → parse sample receipts  
 - [x] Day 4: Size normalization + unit price calculation  
 - [x] Day 5: Web UI scaffold (Next.js) + upload flow  
-- [ ] Day 6: Alerts logic (shrink & unit-price spike) + tests  
+- [x] Day 6: Alerts logic (shrink & unit-price spike) + tests  
 - [ ] Day 7: Deploy preview + demo video  
 
 ---
@@ -126,7 +126,8 @@ curl -X POST "http://localhost:8000/receipts" \
 
 ## ✅ Day 5 Checkpoint — Frontend Bootstrap (Next.js + Docker)
 
-### What’s live now
+**What’s live now**
+
 - **Web service scaffolded** (`/web` with Next.js 14)
 - **Dockerized frontend** (`docker-compose.yml` now builds & runs `shrinkshield-web` on port **3000**)
 - **Global styles** wired (`styles.css`)
@@ -146,7 +147,7 @@ curl -X POST "http://localhost:8000/receipts" \
   - Frontend (web):  
     - `http://localhost:3000` → renders ShrinkShield UI  
 
-### How to run
+**How to run**
 ```bash
 cd infra
 docker compose up --build -d
@@ -154,8 +155,32 @@ docker compose up --build -d
 docker compose logs -f web
 ```
 
-### Visit in browser
+**Visit in browser**
 - Open: http://localhost:3000    You should see:
 - Page title “ShrinkShield — Receipts”
 - File input + Upload button (disabled)
 - “Uploaded receipts” section → shows `No receipts yet` if DB is empty
+
+
+## ✅ Day 6 Checkpoint — Uploads & Alerts Logic
+
+**What’s live now**
+
+- Web UI allows file upload via browser
+- Frontend fetches receipts list from backend
+- Uploaded receipts are persisted in Postgres
+- Receipts list updates immediately on upload
+- Backend API endpoints:
+  - `POST /receipts` → upload a new receipt
+  - `GET /receipts` → list receipts
+  - `GET /receipts/{id}` → fetch detailed view
+
+**How to run**
+
+```bash
+cd infra
+docker compose up --build -d
+# logs (optional)
+docker compose logs -f backend
+docker compose logs -f web
+```
