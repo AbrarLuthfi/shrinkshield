@@ -13,7 +13,7 @@ It uses FastAPI, PostgreSQL, SQLAlchemy, and Alembic for migrations. Future mile
 - [x] Day 4: Size normalization + unit price calculation  
 - [x] Day 5: Web UI scaffold (Next.js) + upload flow  
 - [x] Day 6: Alerts logic (shrink & unit-price spike) + tests  
-- [x] Day 7: Deploy preview + demo video  
+- [x] Day 7: Deploy preview 
 
 ---
 
