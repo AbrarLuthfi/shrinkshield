@@ -186,7 +186,7 @@ docker compose logs -f web
 ```
 
 
-## ✅ Day 7 Checkpoint — Deploy Preview & Demo
+## ✅ Day 7 Checkpoint — Deploy Preview
 
 **What’s live now**
 
